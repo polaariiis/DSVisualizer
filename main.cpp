@@ -3,78 +3,22 @@
 #include <vector>
 #include "Sorting.h"
 
-//void BubbleSort(std::vector<int>& Arr)
-//{
-//	int sizeArr = Arr.size();
-//	for (int i = 1; i < sizeArr; i++)
-//	{
-//		int key = Arr[i];
-//		int j = i - 1;
-//
-//		while (j >= 0 && Arr[j] > key)
-//		{
-//			Arr[j + 1] = Arr[j];
-//			j = j - 1;
-//		}
-//		Arr[j + 1] = key;
-//	}
-//}
 
 inline void Draw(std::vector<sf::RectangleShape>& arr , sf::RenderWindow& wd)
 {
 	for (const auto& n : arr)
 	{
 		wd.draw(n);
-
 	}
-
 }
-//figure out way to use Draw instead of passing it into BubbleSort too costly
-//struct sortingData;
-//void sortingStep(sortingData& s, std::vector<sf::RectangleShape>& arr, float& baseX , float& Ypos)
-//{
-//
-//	if (s.i >= arr.size()) return;
-//	if (!s.inserting)
-//	{
-//		s.key = arr[s.i].getPosition();
-//		s.j = s.i - 1;
-//		s.inserting = true;
-//		return;
-//	}
-//	if ( s.j >= 0 && arr[s.j].getSize().y < arr[s.j + 1].getSize().y)
-//
-//	{
-//		std::swap(arr[s.j], arr[s.j + 1]);
-//		s.j--;
-//
-//		for (int k = 0; k < arr.size(); k++)
-//		{
-//			arr[k].setPosition(baseX * (k + 1), Ypos);
-//		}
-//	}
-//	else
-//	{
-//
-//		s.i++;
-//		s.inserting = false;
-//	}
-//
-//
-//
-//}
 int main()
 {
-	sortingData sData;
+	//sortingData sData;
+	selectionData sData;
 	int Xpos = 100; float Ypos = 900;
 	int count = 0; float baseX = 100.f;
-
-
-	std::vector<float> exampleArr = { 3.f ,2.f ,1.f, 6.f , 8.f };
+	std::vector<float> exampleArr = { 12.f ,7.f ,8.f, 5.f , 3.f };
 	sf::RenderWindow wd(sf::VideoMode(1920, 1080), "test");
-
-
-
 	sf::Clock clock;
 	sf::Time stepDelay = sf::milliseconds(100);
 	sf::Time accumulator = sf::Time::Zero;
@@ -93,10 +37,6 @@ int main()
 		std::cout << "Rectangle Shape:" << count << " pushed into ExampleRec" << std::endl;
 	
 	}
-
-
-
-
 	while (wd.isOpen())
 	{
 		sf::Event event;
@@ -107,12 +47,12 @@ int main()
 				wd.close();
 			}
 		}
-
 		accumulator += clock.restart();
 
 		if (accumulator >= stepDelay)
 		{
-			insertionSort::sortingStep(sData, exampleRec, baseX, Ypos);
+			/*insertionSort::sortingStep(sData, exampleRec, baseX, Ypos);*/
+			selectionSort::selectionStep(sData, exampleRec, baseX, Ypos);
 			accumulator = sf::Time::Zero;
 		}
 		wd.clear(sf::Color::Black);
@@ -121,13 +61,6 @@ int main()
 
 		wd.display();
 	}
-	//BubbleSort(exampleArr);
-	//for (int i : exampleArr)
-	//{
-	//	std::cout << i << " ";
-	//}
-
-
 }
 
 
