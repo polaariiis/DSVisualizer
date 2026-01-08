@@ -22,59 +22,82 @@
 
 void Draw(std::vector<sf::RectangleShape>& arr , sf::RenderWindow& wd)
 {
-	for (auto n : arr)
+	for (const auto& n : arr)
 	{
 		wd.draw(n);
+
 	}
 
 }
 //figure out way to use Draw instead of passing it into BubbleSort too costly
-void InsertionSortDrawing(std::vector<sf::RectangleShape>& arr, sf::RenderWindow& wd )
+struct sortingData
+{
+	int i = 1;int j = 1;
+	sf::Vector2f key;
+	bool inserting = false;
+};
+void sortingStep(sortingData& s, std::vector<sf::RectangleShape>& arr, float& baseX , float& Ypos)
 {
 
-	int sizeArr = arr.size();
-	for (int i = 1; arr.size();i++)
+	if (s.i >= arr.size()) return;
+	if (!s.inserting)
 	{
-		sf::RectangleShape key = arr[i];
-		int j = i - 1;
-		while (j>=0 && arr[j].getSize().y>key.getSize().y)
-		{
-			arr[j + 1] = arr[j];
-			j = j - 1;
-		} 
-		// change the logic instead of changing the rectangles change the position of each rectangle and draw at each frame
-		int e = j + 1;
-		arr[j + 1] = key;
-		//here bug exist fix asap
-		std::cout << "Looped through BubbleDrawing func for 1 time!" << std::endl;
-		Draw(arr , wd);
-	
-		
+		s.key = arr[s.i].getPosition();
+		s.j = s.i - 1;
+		s.inserting = true;
+		return;
 	}
+	if ( s.j >= 0 && arr[s.j].getSize().y < arr[s.j + 1].getSize().y)
+
+	{
+		std::swap(arr[s.j], arr[s.j + 1]);
+		s.j--;
+
+		for (int k = 0; k < arr.size(); k++)
+		{
+			arr[k].setPosition(baseX * (k + 1), Ypos);
+		}
+	}
+	else
+	{
+
+		s.i++;
+		s.inserting = false;
+	}
+
+
+
 }
 int main()
 {
-	int Xpos = 100; int Ypos = 100;
-	int count = 0;
-	std::vector<int> exampleArr = { 3 ,2 ,1, 6 , 8 };
+	sortingData sData;
+	int Xpos = 100; float Ypos = 900;
+	int count = 0; float baseX = 100.f;
+
+
+	std::vector<float> exampleArr = { 3.f ,2.f ,1.f, 6.f , 8.f };
 	sf::RenderWindow wd(sf::VideoMode(1920, 1080), "test");
 
+
+
+	sf::Clock clock;
+	sf::Time stepDelay = sf::milliseconds(100);
+	sf::Time accumulator = sf::Time::Zero;
 	std::vector<sf::RectangleShape> exampleRec = {};
 	for (auto i : exampleArr)
 	{
 		count += 1;
 		//figure out waht count is doing 
 
-		sf::RectangleShape tempRec(sf::Vector2f(100.f, 100.f * i));
+		sf::RectangleShape tempRec(sf::Vector2f(100.f, -i*100));
 		tempRec.setOutlineThickness(1.f);
-		tempRec.setPosition(sf::Vector2f(Xpos * count, Ypos));
+		tempRec.setPosition(sf::Vector2f(Xpos*count , Ypos));
 		tempRec.setFillColor(sf::Color::Green);
 		tempRec.setOutlineColor(sf::Color::Red);
 		exampleRec.push_back(tempRec);
 		std::cout << "Rectangle Shape:" << count << " pushed into ExampleRec" << std::endl;
 	
 	}
-
 
 
 
@@ -90,11 +113,17 @@ int main()
 			}
 		}
 
+		accumulator += clock.restart();
 
-
+		if (accumulator >= stepDelay)
+		{
+			sortingStep(sData , exampleRec , baseX , Ypos);
+			accumulator = sf::Time::Zero;
+		}
 		wd.clear(sf::Color::Black);
-		//better implementation for drawing
-		InsertionSortDrawing(exampleRec, wd);
+		Draw(exampleRec, wd);
+		std::cout << "Draw" << std::endl;
+
 		wd.display();
 	}
 	//BubbleSort(exampleArr);
