@@ -14,7 +14,8 @@ inline void Draw(std::vector<sf::RectangleShape>& arr , sf::RenderWindow& wd)
 int main()
 {
 	//sortingData sData;
-	selectionData sData;
+	//selectionData sData;
+	bubbleSortData sData;
 	int Xpos = 100; float Ypos = 900;
 	int count = 0; float baseX = 100.f;
 	std::vector<float> exampleArr = { 12.f ,7.f ,8.f, 5.f , 3.f };
@@ -52,7 +53,8 @@ int main()
 		if (accumulator >= stepDelay)
 		{
 			/*insertionSort::sortingStep(sData, exampleRec, baseX, Ypos);*/
-			selectionSort::selectionStep(sData, exampleRec, baseX, Ypos);
+			/*selectionSort::selectionStep(sData, exampleRec, baseX, Ypos);*/
+			bubbleSort::bubbleSortStep(sData, exampleRec, baseX, Ypos);
 			accumulator = sf::Time::Zero;
 		}
 		wd.clear(sf::Color::Black);

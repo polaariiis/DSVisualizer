@@ -11,6 +11,74 @@ struct SortMetrics {
 class Sorting
 {
 };
+struct bubbleSortData
+{
+	int i = 0;  int j = 1;
+	bool swapped = 1;
+	bool swapping = 0;
+};
+class bubbleSort : public Sorting
+{
+	/*Bubble sort 
+	* 
+		int n = arr.size();;
+		bool swapped;
+
+		for(int i = 0; i < n - 1; i++)
+		{
+		swapped =false;
+		for(int j = 0 ; j <n - i - 1; j++)
+		{
+			if(arr[j] > arr [j + 1])
+			{
+			swap(arr[j] , arr[j+1]);
+			swapped = true;
+			}
+		
+		}
+
+		}
+	
+	
+	*/
+public:
+	static void bubbleSortStep(bubbleSortData& s,
+		std::vector<sf::RectangleShape>& arr,
+		float baseX, float Ypos)
+	{
+		if (s.i >= arr.size() - 1)
+			return;
+
+		if (s.j >= arr.size() - s.i - 1)
+		{
+			// end of one pass
+			if (!s.swapped)
+				return; // already sorted
+
+			s.j = 0;
+			s.swapped = false;
+			s.i++;
+			return;
+		}
+
+		if (arr[s.j].getSize().y < arr[s.j + 1].getSize().y)
+		{
+			std::swap(arr[s.j], arr[s.j + 1]);
+			s.swapped = true;
+
+			for (int k = 0; k < arr.size(); k++)
+				arr[k].setPosition(baseX * (k + 1), Ypos);
+		}
+
+		s.j++; 
+	}
+};
+
+
+
+
+
+
 
 struct sortingData
 {
