@@ -10,15 +10,18 @@ struct IState {
 };
 
 class StateManager {
-private:
     std::unique_ptr<IState> m_current;
+    std::unique_ptr<IState> m_pending;
 
 public:
-    template <class T>
-    void set(std::unique_ptr<T> s)
-    {
-        static_assert(std::is_base_of_v<IState, T>, "T must derive from IState");
-        m_current = std::move(s); // converts to unique_ptr<IState>
+    template<class T>
+    void set(std::unique_ptr<T> s) {
+        static_assert(std::is_base_of_v<IState, T>);
+        m_pending = std::move(s);   // DO NOT swap immediately
+    }
+
+    void applyPending() {
+        if (m_pending) m_current = std::move(m_pending);
     }
 
     void handleEvent(const sf::Event& e) { if (m_current) m_current->handleEvent(e); }

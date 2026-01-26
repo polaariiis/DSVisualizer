@@ -20,6 +20,7 @@ int main()
     sm.set(std::make_unique<MainMenuState>(sm, window, font));
 
     sf::Clock clock;
+
     while (window.isOpen())
     {
         sf::Event e;
@@ -29,15 +30,19 @@ int main()
                 window.close();
 
             sm.handleEvent(e);
+            sm.applyPending();   // safe after events
         }
 
-        float dt = clock.restart().asSeconds();
-        sm.update(dt);
+        float dt = clock.restart().asSeconds(); // <-- THIS was missing
 
-        window.clear(sf::Color::Black);
+        sm.update(dt);
+        sm.applyPending();       // also safe here
+
+        window.clear();
         sm.render(window);
         window.display();
     }
+
 
     return 0;
 }

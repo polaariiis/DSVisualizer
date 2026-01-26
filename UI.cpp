@@ -1,2 +1,6 @@
 #include "UI.h"
-// All methods are inline in UI.h for simplicity.
+
+//bool Button::isClicked(sf::Vector2f mousePos)
+////{
+////	return m_shape.getGlobalBounds().contains(mousePos);
+////}
