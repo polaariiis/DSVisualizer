@@ -11,10 +11,10 @@ public:
 	sf::Font g_font;
 
 public:
-	void m_beginFrame(sf::RenderWindow& wd) {}; 
-	void m_drawFrame(sf::RenderWindow &wd ,sf::RectangleShape& shape) {};
-	void m_drawText(sf::RenderWindow& wd, sf::Text text);
-	void m_endFrame(sf::RenderWindow& wd) {};
+	void m_beginFrame(sf::RenderWindow& wd);
+	void m_drawFrame(sf::RenderWindow& wd, sf::RectangleShape& shape);
+	void m_drawText(sf::RenderWindow& wd, sf::Text& text);
+	void m_endFrame(sf::RenderWindow& wd);
 
 	//later there will be need for drawing circles and shapes , look for other ways like templates so i dont need each drawing method specific for only one shape 
 public:

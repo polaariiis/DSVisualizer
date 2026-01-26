@@ -52,14 +52,17 @@ public:
 		{
 			std::swap(arr[s.j], arr[s.j + 1]);
 			s.swapped = true;
-
 			for (int k = 0; k < arr.size(); k++)
 				arr[k].setPosition(baseX * (k + 1), Ypos);
 		}
 
 		s.j++;
 	}
-	static void sortingStep(sortingData& s, std::vector<sf::RectangleShape>& arr, float& baseX, float& Ypos)
+
+
+	static void sortingStep(sortingData& s,
+		std::vector<sf::RectangleShape>& arr, 
+		float& baseX, float& Ypos)
 	{
 		{
 			if (s.i >= arr.size()) return;
@@ -89,6 +92,8 @@ public:
 			}
 		}
 	}
+
+
 	static void selectionStep(selectionData& s,
 		std::vector<sf::RectangleShape>& arr,
 		float baseX,
